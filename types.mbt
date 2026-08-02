@@ -95,3 +95,33 @@ pub(all) struct ForecastPoint {
   predicted : Double
   actual : Double
 } derive(Debug, Eq)
+
+///|
+pub(all) struct ScenarioConfig {
+  steps : Int
+  interval_seconds : Double
+  base_speed : Double
+  congestion : Double
+  noise_stride : Int
+  noise_magnitude : Double
+} derive(Debug, Eq)
+
+///|
+pub(all) struct ScenarioTrace {
+  observations : Array[Observation]
+  actual_remaining : Array[Double]
+} derive(Debug, Eq)
+
+///|
+pub(all) struct CalibrationConfig {
+  min_congestion : Double
+  max_congestion : Double
+  steps : Int
+} derive(Debug, Eq)
+
+///|
+pub(all) struct CalibrationResult {
+  best_congestion : Double
+  best_error : ErrorSummary
+  candidates : Array[ForecastPoint]
+} derive(Debug, Eq)
