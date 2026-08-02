@@ -1,0 +1,5 @@
+import {
+  "lijunjie860/moonbit-eta-predict" @eta,
+}
+
+pkgtype(kind: "executable")
