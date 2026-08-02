@@ -48,3 +48,25 @@ test "metrics summarize forecast errors" {
   assert_true(summary.mae > 2.0)
   assert_true(summary.max_error == 3.0)
 }
+
+///|
+test "scenario generator creates aligned observations and actuals" {
+  let trace = noisy_demo_trace()
+  assert_eq(trace.observations.length(), trace.actual_remaining.length())
+  assert_true(trace.observations.length() == default_scenario_config().steps)
+}
+
+///|
+test "calibration scans congestion candidates" {
+  let result = calibrate_demo()
+  assert_true(result.candidates.length() > 5)
+  assert_true(result.best_congestion >= 0.0)
+  assert_true(result.best_congestion <= 1.0)
+}
+
+///|
+test "demo report includes eta and calibration sections" {
+  let report = demo_report()
+  assert_true(report.contains("MoonBit ETA report"))
+  assert_true(report.contains("best_congestion"))
+}

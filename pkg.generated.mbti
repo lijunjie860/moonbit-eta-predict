@@ -8,15 +8,25 @@ import {
 // Values
 pub fn abs_double(Double) -> Double
 
+pub fn calibrate_congestion(RouteProfile, Array[Observation], Array[Double], config? : CalibrationConfig) -> CalibrationResult
+
+pub fn calibrate_demo() -> CalibrationResult
+
 pub fn clamp(Double, Double, Double) -> Double
+
+pub fn default_calibration_config() -> CalibrationConfig
 
 pub fn default_eta_config() -> EtaConfig
 
 pub fn default_kalman_config() -> KalmanConfig
 
+pub fn default_scenario_config() -> ScenarioConfig
+
 pub fn default_window_config() -> WindowConfig
 
 pub fn demo_observations() -> Array[Observation]
+
+pub fn demo_report() -> String
 
 pub fn demo_route() -> RouteProfile
 
@@ -24,7 +34,17 @@ pub fn eta_results_to_points(Array[EtaResult], Array[Double]) -> Array[ForecastP
 
 pub fn forecast_route(Array[Observation], RouteProfile) -> Array[EtaResult]
 
+pub fn format_calibration(CalibrationResult) -> String
+
+pub fn format_error_summary(ErrorSummary) -> String
+
+pub fn format_eta_result(EtaResult) -> String
+
+pub fn generate_scenario(RouteProfile, ScenarioConfig) -> ScenarioTrace
+
 pub fn mean(Array[Double]) -> Double
+
+pub fn noisy_demo_trace() -> ScenarioTrace
 
 pub fn run_demo() -> Array[EtaResult]
 
@@ -43,6 +63,18 @@ pub fn velocity_from_observation(Observation, Observation) -> VelocitySample
 // Errors
 
 // Types and methods
+pub(all) struct CalibrationConfig {
+  min_congestion : Double
+  max_congestion : Double
+  steps : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct CalibrationResult {
+  best_congestion : Double
+  best_error : ErrorSummary
+  candidates : Array[ForecastPoint]
+} derive(Eq, @debug.Debug)
+
 pub(all) struct ErrorSummary {
   count : Int
   mae : Double
@@ -116,6 +148,20 @@ pub(all) struct RouteProfile {
 pub fn RouteProfile::average_reliability(Self) -> Double
 pub fn RouteProfile::historical_eta(Self, congestion~ : Double) -> Double
 pub fn RouteProfile::total_distance(Self) -> Double
+
+pub(all) struct ScenarioConfig {
+  steps : Int
+  interval_seconds : Double
+  base_speed : Double
+  congestion : Double
+  noise_stride : Int
+  noise_magnitude : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ScenarioTrace {
+  observations : Array[Observation]
+  actual_remaining : Array[Double]
+} derive(Eq, @debug.Debug)
 
 pub(all) struct SegmentProfile {
   segment_id : String

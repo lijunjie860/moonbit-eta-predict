@@ -12,6 +12,9 @@ The project was created for the MoonBit August Hackathon. Before selecting the t
 - Route profiles with free-flow, typical, rush-hour, and reliability parameters.
 - ETA engine that blends live observations with historical segment expectations.
 - Metrics helpers for MAE, RMSE, MAPE, and max error.
+- Synthetic scenario generator for repeatable noisy route traces.
+- Congestion calibration scan for tuning route profiles.
+- Text report helpers for demos, CI logs, and acceptance evidence.
 - Runnable demo and black-box tests.
 
 ## Quick Start
@@ -49,6 +52,9 @@ test {
 |-- profile.mbt                # Route and segment historical model
 |-- eta.mbt                    # ETA engine facade
 |-- metrics.mbt                # Forecast evaluation helpers
+|-- scenario.mbt               # Synthetic route trace generation
+|-- calibration.mbt            # Congestion parameter scanning
+|-- report.mbt                 # Human-readable result summaries
 |-- examples.mbt               # Built-in demo route and observations
 |-- cmd/main                   # CLI demo
 |-- .github/workflows/test.yml # CI for MoonBit checks and tests
