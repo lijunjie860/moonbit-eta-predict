@@ -8,21 +8,143 @@ import {
 // Values
 pub fn abs_double(Double) -> Double
 
+pub fn alert_counts(Array[ForecastAlert]) -> Array[Int]
+
+pub fn all_schema_field_names() -> Array[String]
+
+pub fn allocate_live_speed(RouteProfile, Double, SegmentProfile) -> Double
+
+pub fn append_dataset(ObservationDataset, ObservationDataset) -> ObservationDataset
+
+pub fn apply_confidence_floor(BatchForecast, floor~ : Double) -> BatchForecast
+
+pub fn average_window_mae(RollingEvaluation) -> Double
+
+pub fn baseline_delta(EtaResult, RouteProfile, congestion~ : Double) -> Double
+
+pub fn batch_confidences(BatchForecast) -> Array[Double]
+
+pub fn batch_eta_values(BatchForecast) -> Array[Double]
+
+pub fn benchmark_annotation(BenchmarkReport) -> String
+
+pub fn benchmark_case_line(BenchmarkCase) -> String
+
+pub fn benchmark_case_names(BenchmarkReport) -> Array[String]
+
+pub fn benchmark_cases() -> Array[BenchmarkCase]
+
+pub fn benchmark_evidence(BenchmarkReport, String) -> String
+
+pub fn benchmark_interpretation(BenchmarkReport) -> String
+
+pub fn benchmark_lines(BenchmarkReport) -> Array[String]
+
+pub fn benchmark_mae_spread(BenchmarkReport) -> Double
+
+pub fn benchmark_passes(BenchmarkReport, max_mae~ : Double) -> Bool
+
+pub fn benchmark_route(RouteProfile, Array[(String, ScenarioConfig)]) -> BenchmarkReport
+
+pub fn best_benchmark_case(BenchmarkReport) -> BenchmarkCase?
+
+pub fn bottleneck_segment(Array[SegmentEta]) -> SegmentEta?
+
+pub fn breakdown_is_consistent(RouteBreakdown) -> Bool
+
+pub fn build_observation_batch(Array[Observation], source? : String) -> ObservationBatch
+
+pub fn calendar_label(RouteCalendar, Int, Double) -> String
+
 pub fn calibrate_congestion(RouteProfile, Array[Observation], Array[Double], config? : CalibrationConfig) -> CalibrationResult
 
 pub fn calibrate_demo() -> CalibrationResult
 
+pub fn calibration_error_curve(GridCalibration) -> Array[ForecastPoint]
+
+pub fn calibration_gap(MetricReport) -> Double
+
+pub fn calibration_improvement(RouteProfile, ObservationDataset, baseline~ : Double, GridCalibration) -> Double
+
+pub fn candidates_by_congestion(GridCalibration) -> Array[CalibrationCandidate]
+
+pub fn capabilities() -> Array[String]
+
+pub fn capabilities_are_named() -> Bool
+
+pub fn change_points(Array[Double], threshold? : Double) -> Array[Int]
+
+pub fn check_eta_result(EtaResult) -> Bool
+
+pub fn check_eta_results(Array[EtaResult]) -> ContractReport
+
+pub fn check_remaining_distance(Array[EtaResult]) -> Bool
+
 pub fn clamp(Double, Double, Double) -> Double
+
+pub fn clamp_observation_distance(Observation, Double) -> Observation
+
+pub fn cli_help() -> String
+
+pub fn compare_double(Double, Double) -> Int
+
+pub fn completion_index(RouteProfile, Array[Observation]) -> Int?
+
+pub fn completion_scenario() -> ScenarioConfig
+
+pub fn confidence_interval(Array[Double], level? : Double) -> ConfidenceInterval
+
+pub fn congested_scenario() -> ScenarioConfig
+
+pub fn congestion_grid(minimum~ : Double, maximum~ : Double, steps~ : Int) -> Array[Double]
+
+pub fn congestion_sensitivity(RouteProfile, speed? : Double, steps? : Int) -> SensitivityReport
+
+pub fn cross_validate_congestion(RouteProfile, ObservationDataset, fold_count? : Int) -> CrossValidationReport
+
+pub fn cross_validation_is_complete(CrossValidationReport) -> Bool
+
+pub fn cross_validation_mean_mae(CrossValidationReport) -> Double
+
+pub fn cumulative_segment_eta(Array[SegmentEta]) -> Array[Double]
+
+pub fn cumulative_sum(Array[Double], initial? : Double) -> Array[Double]
+
+pub fn dataset_distance(ObservationDataset) -> Double
+
+pub fn dataset_duration(ObservationDataset) -> Double
+
+pub fn dataset_from_observations(Array[Observation], name? : String) -> ObservationDataset
+
+pub fn dataset_from_targets(Array[Observation], Array[Double], name? : String) -> ObservationDataset
+
+pub fn dataset_is_guarded(ObservationDataset, InputGuardConfig) -> Bool
+
+pub fn dataset_weights(ObservationDataset) -> Array[Double]
 
 pub fn default_calibration_config() -> CalibrationConfig
 
 pub fn default_eta_config() -> EtaConfig
 
+pub fn default_input_guard(RouteProfile) -> InputGuardConfig
+
 pub fn default_kalman_config() -> KalmanConfig
+
+pub fn default_quality_gate() -> QualityGateConfig
 
 pub fn default_scenario_config() -> ScenarioConfig
 
+pub fn default_speed_policy() -> SpeedPolicy
+
 pub fn default_window_config() -> WindowConfig
+
+pub fn delayed_scenario() -> ScenarioConfig
+
+pub fn demo_calendar() -> RouteCalendar
+
+pub fn demo_calibration_dataset() -> ObservationDataset
+
+pub fn demo_health() -> HealthReport
 
 pub fn demo_observations() -> Array[Observation]
 
@@ -30,39 +152,465 @@ pub fn demo_report() -> String
 
 pub fn demo_route() -> RouteProfile
 
+pub fn detailed_breakdown_is_consistent(DetailedBreakdown) -> Bool
+
+pub fn detect_alerts(StreamSummary, confidence_threshold? : Double, eta_jump_threshold? : Double) -> Array[ForecastAlert]
+
+pub fn dominant_eta_factor(EtaExplanation) -> String?
+
+pub fn encode_csv_observations(Array[Observation]) -> String
+
+pub fn encode_dataset_json_lines(ObservationDataset) -> String
+
+pub fn encode_json_lines(Array[Observation]) -> String
+
 pub fn eta_results_to_points(Array[EtaResult], Array[Double]) -> Array[ForecastPoint]
+
+pub fn eta_trend(BatchForecast) -> (Double, Double, Double)
+
+pub fn evaluate_batch_quality(Array[Observation], BatchForecast, QualityGateConfig) -> QualityGateResult
+
+pub fn evaluate_quality_gate(Array[EtaResult], Array[ForecastPoint], QualityGateConfig) -> QualityGateResult
+
+pub fn explain_batch(BatchForecast, RouteProfile, congestion~ : Double) -> Array[EtaExplanation]
+
+pub fn explain_eta(EtaResult, RouteProfile, congestion~ : Double, config? : EtaConfig) -> EtaExplanation
+
+pub fn exponential_mean(Array[Double], alpha? : Double) -> Double
+
+pub fn extrapolate_series(Array[Double], Int) -> Array[Double]
+
+pub fn feature_names() -> Array[String]
+
+pub fn first_differences(Array[Double]) -> Array[Double]
+
+pub fn forecast_batch(Array[Observation], RouteProfile, congestion~ : Double) -> BatchForecast
+
+pub fn forecast_bias(Array[ForecastPoint]) -> Double
+
+pub fn forecast_breakdown(RouteProfile, speed~ : Double, congestion~ : Double, policy? : SpeedPolicy) -> RouteBreakdown
+
+pub fn forecast_breakdown_at(RouteProfile, speed~ : Double, RouteCalendar, weekday~ : Int, second_of_day~ : Double, policy? : SpeedPolicy) -> DetailedBreakdown
+
+pub fn forecast_contract(Array[Observation], Array[EtaResult]) -> ContractReport
+
+pub fn forecast_dataset(ObservationDataset, RouteProfile, congestion~ : Double) -> BatchForecast
+
+pub fn forecast_many(Array[Observation], Array[RouteProfile], congestion~ : Double) -> Array[BatchForecast]
 
 pub fn forecast_route(Array[Observation], RouteProfile) -> Array[EtaResult]
 
+pub fn format_alert(ForecastAlert) -> String
+
+pub fn format_alerts(Array[ForecastAlert]) -> String
+
+pub fn format_batch_forecast(BatchForecast) -> String
+
+pub fn format_benchmark_case(BenchmarkCase) -> String
+
+pub fn format_breakdown(RouteBreakdown) -> String
+
 pub fn format_calibration(CalibrationResult) -> String
+
+pub fn format_contract(ContractReport) -> String
+
+pub fn format_cross_validation(CrossValidationReport) -> String
+
+pub fn format_detailed_breakdown(DetailedBreakdown) -> String
 
 pub fn format_error_summary(ErrorSummary) -> String
 
+pub fn format_eta_explanation(EtaExplanation) -> String
+
 pub fn format_eta_result(EtaResult) -> String
+
+pub fn format_evaluation_window(EvaluationWindow) -> String
+
+pub fn format_grid_calibration(GridCalibration) -> String
+
+pub fn format_health(HealthReport) -> String
+
+pub fn format_parse_error(ParseError) -> String
+
+pub fn format_parse_result(ObservationParseResult) -> String
+
+pub fn format_quality_gate(QualityGateResult) -> String
+
+pub fn format_rolling_evaluation(RollingEvaluation) -> String
+
+pub fn format_schema(DatasetSchema) -> String
+
+pub fn format_sensitivity(SensitivityReport) -> String
+
+pub fn format_validation(ValidationReport) -> String
 
 pub fn generate_scenario(RouteProfile, ScenarioConfig) -> ScenarioTrace
 
+pub fn grid_calibrate(RouteProfile, ObservationDataset, minimum? : Double, maximum? : Double, steps? : Int) -> GridCalibration
+
+pub fn grid_calibrate_demo() -> GridCalibration
+
+pub fn guard_observation(Observation?, Observation, InputGuardConfig) -> GuardResult
+
+pub fn guard_trace(Array[Observation], InputGuardConfig) -> (Array[Observation], Array[String])
+
+pub fn has_duplicate_fields(Array[String]) -> Bool
+
+pub fn has_hard_alert(Array[ForecastAlert]) -> Bool
+
+pub fn health_check(RouteProfile, config? : EtaConfig, calendar? : RouteCalendar) -> HealthReport
+
+pub fn highest_alert(Array[ForecastAlert]) -> ForecastAlert?
+
+pub fn historical_deviation(SegmentProfile, Double) -> Double
+
+pub fn holdout_evaluate(RouteProfile, ObservationDataset, holdout_ratio? : Double) -> (GridCalibration, ErrorSummary)
+
+pub fn holt_level(Array[Double], alpha? : Double, beta? : Double) -> Array[Double]
+
+pub fn integrate_series(Array[Double], interval? : Double) -> Double
+
+pub fn interface_filename() -> String
+
+pub fn interpolate_congestion(Double, Double, Double) -> Double
+
+pub fn interpolate_series(Array[Double], Double) -> Double
+
+pub fn is_finite_value(Double) -> Bool
+
+pub fn labeled_schema() -> DatasetSchema
+
+pub fn latest_stream_label(StreamSummary) -> String
+
+pub fn low_confidence_updates(StreamSummary, threshold~ : Double) -> Int
+
+pub fn mad(Array[Double]) -> Double
+
+pub fn make_folds(Int, Int) -> Array[Array[Int]]
+
+pub fn make_route_candidates(Array[(String, RouteProfile)], speed~ : Double, congestion~ : Double, risk_penalty? : Double) -> Array[RouteCandidate]
+
+pub fn maximum_sensitivity_delta(SensitivityReport) -> Double
+
 pub fn mean(Array[Double]) -> Double
 
+pub fn mean_absolute_difference(Array[Double], Array[Double]) -> Double
+
+pub fn median(Array[Double]) -> Double
+
+pub fn median_absolute_error(Array[ForecastPoint]) -> Double
+
+pub fn merge_stream_summaries(StreamSummary, StreamSummary) -> StreamSummary
+
+pub fn metadata_is_complete() -> Bool
+
+pub fn metric_bins(Array[EtaResult], Array[ForecastPoint], bin_count? : Int) -> Array[MetricBin]
+
+pub fn metric_report(Array[EtaResult], Array[ForecastPoint], tolerance? : Double) -> MetricReport
+
+pub fn metric_score(MetricReport, coverage_weight? : Double) -> Double
+
+pub fn metric_vector(MetricReport) -> Array[Double]
+
+pub fn monitor_observations(Array[Observation], RouteProfile) -> (StreamSummary, Array[ForecastAlert])
+
+pub fn monotonic_distance(Array[Observation]) -> Bool
+
+pub fn moving_average_series(Array[Double], Int) -> Array[Double]
+
+pub fn named_scenario(String) -> ScenarioTrace
+
+pub fn nearest_sensitivity_point(SensitivityReport, Double) -> SensitivityPoint?
+
 pub fn noisy_demo_trace() -> ScenarioTrace
+
+pub fn noisy_scenario() -> ScenarioConfig
+
+pub fn noisy_values(Array[Double], UInt64, magnitude~ : Double) -> Array[Double]
+
+pub fn normalize_calendar(RouteCalendar) -> RouteCalendar
+
+pub fn normalize_observations(Array[Observation]) -> Array[Observation]
+
+pub fn normalize_weekday(Int) -> Int
+
+pub fn observation_schema() -> DatasetSchema
+
+pub fn package_description() -> String
+
+pub fn package_license() -> String
+
+pub fn package_name() -> String
+
+pub fn package_repository() -> String
+
+pub fn package_version() -> String
+
+pub fn page_stream(StreamSummary, Int) -> Array[StreamSummary]
+
+pub fn pareto_routes(Array[RouteCandidate]) -> Array[RouteCandidate]
+
+pub fn parse_cli_options(Array[String]) -> Map[String, String]
+
+pub fn parse_csv_dataset(String, name? : String) -> ParseOutcome[ObservationDataset]
+
+pub fn parse_csv_observations(String) -> ObservationParseResult
+
+pub fn parse_double_token(String) -> Double?
+
+pub fn parse_error_code(ParseError) -> String
+
+pub fn parse_json_dataset(String, name? : String) -> ParseOutcome[ObservationDataset]
+
+pub fn parse_json_lines(String) -> ObservationParseResult
+
+pub fn passing_window_count(RollingEvaluation, limit~ : Double) -> Int
+
+pub fn percentile_rank(Array[Double], value~ : Double) -> Double
+
+pub fn population_variance(Array[Double]) -> Double
+
+pub fn predict_segment_speed(SegmentProfile, Double, Double, policy? : SpeedPolicy) -> Double
+
+pub fn prediction_coverage(Array[ForecastPoint], tolerance~ : Double) -> Double
+
+pub fn quality_gate_passed(QualityGateResult) -> Bool
+
+pub fn quantile(Array[Double], probability~ : Double) -> Double
+
+pub fn rank_routes(Array[RouteCandidate]) -> Array[RouteCandidate]
+
+pub fn refine_grid(RouteProfile, ObservationDataset, GridCalibration, radius? : Double, steps? : Int) -> GridCalibration
+
+pub fn regime_for_congestion(Double) -> TrafficRegime
+
+pub fn release_metadata() -> String
+
+pub fn reliable_distance_fraction(RouteProfile, floor? : Double) -> Double
+
+pub fn reliable_segments(RouteProfile, floor? : Double) -> Array[SegmentProfile]
+
+pub fn render_benchmark_report(Array[BenchmarkCase], ErrorSummary) -> String
+
+pub fn render_benchmark_table(BenchmarkReport) -> String
+
+pub fn repeat_to(Array[Double], Int) -> Array[Double]
+
+pub fn replay_stream(Array[Observation], RouteProfile, initial_speed? : Double) -> StreamSummary
+
+pub fn resample_series(Array[Double], Int) -> Array[Double]
+
+pub fn rescore_batch(BatchForecast, Array[Double]) -> BatchForecast
+
+pub fn results_are_finite(Array[EtaResult]) -> Bool
+
+pub fn robust_mean(Array[Double]) -> Double
+
+pub fn rolling_evaluate(Array[EtaResult], Array[Double], window_size~ : Int) -> RollingEvaluation
+
+pub fn rolling_improvement(RollingEvaluation, RollingEvaluation) -> Double
+
+pub fn root_mean_square(Array[Double]) -> Double
+
+pub fn route_ids(Array[RouteCandidate]) -> Array[String]
+
+pub fn route_progress(RouteProfile, Double) -> Double
+
+pub fn route_remaining_distance(RouteProfile, Observation) -> Double
+
+pub fn route_summary(RouteProfile) -> String
+
+pub fn run_benchmark_suite() -> BenchmarkReport
+
+pub fn run_cli(Array[String]) -> String
+
+pub fn run_cli_benchmark() -> String
 
 pub fn run_demo() -> Array[EtaResult]
 
 pub fn safe_div(Double, Double, Double) -> Double
 
+pub fn safe_route_distance(RouteProfile) -> Double
+
+pub fn sample_calendar(RouteCalendar, Int, Double, Double, Int) -> Array[Double]
+
+pub fn sample_indices(Int, Int) -> Array[Int]
+
+pub fn sample_variance(Array[Double]) -> Double
+
+pub fn sanitize_input_guard(InputGuardConfig) -> InputGuardConfig
+
+pub fn sanitize_kalman_config(KalmanConfig) -> KalmanConfig
+
+pub fn sanitize_quality_gate(QualityGateConfig) -> QualityGateConfig
+
+pub fn sanitize_speed_policy(SpeedPolicy) -> SpeedPolicy
+
+pub fn sanitize_window_config(WindowConfig) -> WindowConfig
+
+pub fn scale_breakdown(RouteBreakdown, remaining_fraction~ : Double) -> RouteBreakdown
+
+pub fn scenario_is_well_formed(ScenarioTrace, RouteProfile) -> Bool
+
+pub fn scenario_size_delta(ScenarioTrace, ScenarioTrace) -> Int
+
+pub fn schema_field_from_name(String) -> SchemaField?
+
+pub fn schema_field_name(SchemaField) -> String
+
+pub fn schema_headers(DatasetSchema, include_optional? : Bool) -> Array[String]
+
+pub fn select_route(Array[RouteCandidate]) -> RouteSelection
+
+pub fn select_values(Array[Double], Array[Int]) -> Array[Double]
+
+pub fn selection_risk_premium(RouteSelection) -> Double
+
+pub fn singleton_scenario() -> ScenarioConfig
+
+pub fn smape(Array[ForecastPoint]) -> Double
+
 pub fn smooth_values(Array[Double], initial~ : Double, config~ : KalmanConfig) -> Array[Double]
+
+pub fn snapshot_confidences(StreamSummary) -> Array[Double]
+
+pub fn snapshot_etas(StreamSummary) -> Array[Double]
+
+pub fn sorted_values(Array[Double]) -> Array[Double]
+
+pub fn speed_candidates(SegmentProfile, congestion~ : Double) -> Array[Double]
+
+pub fn speed_confidence(SegmentProfile, Double, Double) -> Double
+
+pub fn speed_sensitivity(RouteProfile, congestion~ : Double, baseline_speed? : Double, minimum_speed? : Double, maximum_speed? : Double, steps? : Int) -> SensitivityReport
+
+pub fn split_by_confidence(Array[EtaResult], threshold~ : Double) -> (Array[EtaResult], Array[EtaResult])
+
+pub fn split_indices(Int, holdout_ratio? : Double) -> (Array[Int], Array[Int])
 
 pub fn square(Double) -> Double
 
+pub fn stable_scenario() -> ScenarioConfig
+
+pub fn stable_sum(Array[Double]) -> Double
+
+pub fn standard_scenarios() -> Array[(String, ScenarioConfig)]
+
+pub fn stream_is_safe(StreamSummary) -> Bool
+
+pub fn strict_quality_gate() -> QualityGateConfig
+
+pub fn stride_dataset(ObservationDataset, Int) -> ObservationDataset
+
+pub fn sum_segment_eta(Array[SegmentEta]) -> Double
+
+pub fn summarize_dataset(ObservationDataset) -> DatasetSummary
+
 pub fn summarize_errors(Array[ForecastPoint]) -> ErrorSummary
+
+pub fn summarize_time_series(Array[Double]) -> TimeSeriesSummary
+
+pub fn supported_targets() -> Array[String]
+
+pub fn supports_target(String) -> Bool
+
+pub fn target_coverage(ObservationDataset) -> Double
+
+pub fn target_distribution(ObservationDataset) -> Array[Double]
+
+pub fn timestamp_grid(Double, Double, Int) -> Array[Double]
+
+pub fn top_candidates(GridCalibration, Int) -> Array[CalibrationCandidate]
+
+pub fn trace_progress(RouteProfile, Array[Observation]) -> Array[Double]
+
+pub fn trimmed_mean(Array[Double], proportion? : Double) -> Double
+
+pub fn unit_weights(Int) -> Array[Double]
+
+pub fn validate_calendar_bucket(CalendarBucket) -> Bool
+
+pub fn validate_eta_config(EtaConfig) -> ValidationReport
+
+pub fn validate_observations(Array[Observation]) -> ValidationReport
+
+pub fn validate_route(RouteProfile) -> ValidationReport
+
+pub fn validate_schema_header(DatasetSchema, Array[String]) -> SchemaReport
+
+pub fn validate_schema_metadata(DatasetSchema) -> Bool
+
+pub fn validation_commands() -> Array[String]
 
 pub fn variance(Array[Double]) -> Double
 
 pub fn velocity_from_observation(Observation, Observation) -> VelocitySample
 
+pub fn version_banner() -> String
+
+pub fn weighted_mean(Array[Double], Array[Double]) -> Double
+
+pub fn winsorize(Array[Double], lower_probability? : Double, upper_probability? : Double) -> Array[Double]
+
+pub fn with_risk_budget(RouteCandidate, budget~ : Double) -> RouteCandidate
+
+pub fn worst_benchmark_case(BenchmarkReport) -> BenchmarkCase?
+
+pub fn worst_cross_validation_fold(CrossValidationReport) -> CrossValidationFold?
+
+pub fn worst_window(RollingEvaluation) -> EvaluationWindow?
+
+pub fn z_score(Double, Array[Double]) -> Double
+
 // Errors
 
 // Types and methods
+pub(all) enum AlertKind {
+  LowConfidence
+  EtaJump
+  StalledProgress
+  RouteComplete
+  InvalidObservation
+} derive(Eq, @debug.Debug)
+
+pub(all) struct BatchForecast {
+  results : Array[EtaResult]
+  points : Array[ForecastPoint]
+  summary : ErrorSummary
+  skipped : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct BenchmarkCase {
+  name : String
+  points : Int
+  summary : ErrorSummary
+  mean_confidence : Double
+  notes : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct BenchmarkReport {
+  cases : Array[BenchmarkCase]
+  aggregate : ErrorSummary
+  total_points : Int
+  rendered : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct CalendarBucket {
+  start_second : Double
+  end_second : Double
+  congestion : Double
+  label : String
+} derive(Eq, @debug.Debug)
+pub fn CalendarBucket::contains(Self, Double) -> Bool
+pub fn CalendarBucket::midpoint(Self) -> Double
+pub fn CalendarBucket::new(Double, Double, Double, label? : String) -> Self
+
+pub(all) struct CalibrationCandidate {
+  congestion : Double
+  error : ErrorSummary
+  rank : Int
+} derive(Eq, @debug.Debug)
+
 pub(all) struct CalibrationConfig {
   min_congestion : Double
   max_congestion : Double
@@ -73,6 +621,72 @@ pub(all) struct CalibrationResult {
   best_congestion : Double
   best_error : ErrorSummary
   candidates : Array[ForecastPoint]
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ConfidenceInterval {
+  estimate : Double
+  lower : Double
+  upper : Double
+  level : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ContractReport {
+  valid : Bool
+  checks : Int
+  failures : Array[String]
+} derive(Eq, @debug.Debug)
+
+pub(all) struct CrossValidationFold {
+  fold : Int
+  train_count : Int
+  test_count : Int
+  summary : ErrorSummary
+} derive(Eq, @debug.Debug)
+
+pub(all) struct CrossValidationReport {
+  folds : Array[CrossValidationFold]
+  aggregate : ErrorSummary
+  best_congestion : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct DatasetRow {
+  observation : Observation
+  actual_remaining : Double?
+  weight : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct DatasetSchema {
+  name : String
+  required : Array[SchemaField]
+  optional : Array[SchemaField]
+  version : String
+} derive(Eq, @debug.Debug)
+pub fn DatasetSchema::accepts(Self, SchemaField) -> Bool
+pub fn DatasetSchema::field_count(Self) -> Int
+
+pub(all) struct DatasetSummary {
+  rows : Int
+  duration : Double
+  distance : Double
+  average_speed : Double
+  missing_targets : Int
+  average_weight : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct DayCalendar {
+  weekday : Int
+  buckets : Array[CalendarBucket]
+  fallback_congestion : Double
+} derive(Eq, @debug.Debug)
+pub fn DayCalendar::congestion_at(Self, Double) -> Double
+pub fn DayCalendar::label_at(Self, Double) -> String
+pub fn DayCalendar::valid_bucket_count(Self) -> Int
+
+pub(all) struct DetailedBreakdown {
+  forecasts : Array[SegmentForecast]
+  total : RouteBreakdown
+  weekday : Int
+  second_of_day : Double
 } derive(Eq, @debug.Debug)
 
 pub(all) struct ErrorSummary {
@@ -101,6 +715,17 @@ pub(all) struct EtaEngine {
 pub fn EtaEngine::new(RouteProfile, initial_speed~ : Double, config? : EtaConfig) -> Self
 pub fn EtaEngine::observe(Self, Observation, congestion? : Double) -> (Self, EtaResult)
 
+pub(all) struct EtaExplanation {
+  remaining_distance : Double
+  raw_speed : Double
+  smoothed_speed : Double
+  historical_speed : Double
+  live_weight : Double
+  history_weight : Double
+  confidence : Double
+  factors : Array[String]
+} derive(Eq, @debug.Debug)
+
 pub(all) struct EtaResult {
   eta_seconds : Double
   smoothed_speed : Double
@@ -109,9 +734,49 @@ pub(all) struct EtaResult {
   remaining_distance : Double
 } derive(Eq, @debug.Debug)
 
+pub(all) struct EvaluationWindow {
+  start : Int
+  end : Int
+  summary : ErrorSummary
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ForecastAlert {
+  kind : AlertKind
+  update : Int
+  severity : Double
+  message : String
+} derive(Eq, @debug.Debug)
+
 pub(all) struct ForecastPoint {
   predicted : Double
   actual : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct GridCalibration {
+  candidates : Array[CalibrationCandidate]
+  best : CalibrationCandidate
+  evaluated : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct GuardResult {
+  accepted : Bool
+  observation : Observation
+  reasons : Array[String]
+} derive(Eq, @debug.Debug)
+
+pub(all) struct HealthReport {
+  ready : Bool
+  route_valid : Bool
+  config_valid : Bool
+  calendar_valid : Bool
+  messages : Array[String]
+} derive(Eq, @debug.Debug)
+
+pub(all) struct InputGuardConfig {
+  maximum_distance : Double
+  maximum_timestamp : Double
+  reject_backwards_time : Bool
+  reject_backwards_distance : Bool
 } derive(Eq, @debug.Debug)
 
 pub(all) struct KalmanConfig {
@@ -136,10 +801,108 @@ pub fn KalmanState::new(Double, KalmanConfig) -> Self
 pub fn KalmanState::predict(Self, delta_seconds? : Double) -> Self
 pub fn KalmanState::update(Self, Double) -> Self
 
+pub(all) struct MetricBin {
+  lower : Double
+  upper : Double
+  count : Int
+  mean_error : Double
+  mean_confidence : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct MetricReport {
+  summary : ErrorSummary
+  bias : Double
+  smape : Double
+  median_absolute_error : Double
+  coverage : Double
+  bins : Array[MetricBin]
+} derive(Eq, @debug.Debug)
+
 pub(all) struct Observation {
   timestamp : Double
   distance : Double
   elapsed : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ObservationBatch {
+  observations : Array[Observation]
+  source : String
+  dropped : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ObservationDataset {
+  rows : Array[DatasetRow]
+  name : String
+} derive(Eq, @debug.Debug)
+pub fn ObservationDataset::between(Self, start~ : Double, end~ : Double) -> Self
+pub fn ObservationDataset::labeled(Self) -> Self
+pub fn ObservationDataset::normalize(Self) -> Self
+pub fn ObservationDataset::observations(Self) -> Array[Observation]
+pub fn ObservationDataset::targets(Self) -> Array[Double]
+pub fn ObservationDataset::weighted(Self) -> Self
+
+pub(all) struct ObservationParseResult {
+  observations : Array[Observation]
+  error : ParseError?
+  lines_read : Int
+} derive(Eq, @debug.Debug)
+pub fn ObservationParseResult::is_error(Self) -> Bool
+pub fn ObservationParseResult::or_empty(Self) -> Array[Observation]
+
+pub(all) enum ParseError {
+  EmptyInput
+  MissingHeader
+  MissingField(line~ : Int, field~ : String)
+  ExtraField(line~ : Int)
+  InvalidNumber(line~ : Int, field~ : String, value~ : String)
+  InvalidSyntax(line~ : Int, message~ : String)
+  UnsupportedSchema(String)
+} derive(Eq, @debug.Debug)
+
+pub(all) enum ParseOutcome[T] {
+  Parsed(T)
+  ParseFailed(ParseError)
+} derive(Eq, @debug.Debug)
+
+pub(all) struct QualityGateConfig {
+  max_mae : Double
+  max_rmse : Double
+  min_confidence : Double
+  min_points : Int
+  require_monotonic_distance : Bool
+} derive(Eq, @debug.Debug)
+
+pub(all) struct QualityGateResult {
+  passed : Bool
+  reasons : Array[String]
+  checked_points : Int
+  summary : ErrorSummary
+} derive(Eq, @debug.Debug)
+
+pub(all) struct RollingEvaluation {
+  windows : Array[EvaluationWindow]
+  overall : ErrorSummary
+} derive(Eq, @debug.Debug)
+
+pub(all) struct RouteBreakdown {
+  segments : Array[SegmentEta]
+  total_distance : Double
+  total_eta_seconds : Double
+  confidence : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct RouteCalendar {
+  days : Array[DayCalendar]
+  default_congestion : Double
+} derive(Eq, @debug.Debug)
+pub fn RouteCalendar::congestion_at(Self, Int, Double) -> Double
+
+pub(all) struct RouteCandidate {
+  route_id : String
+  route : RouteProfile
+  breakdown : RouteBreakdown
+  score : Double
+  risk : Double
 } derive(Eq, @debug.Debug)
 
 pub(all) struct RouteProfile {
@@ -148,6 +911,31 @@ pub(all) struct RouteProfile {
 pub fn RouteProfile::average_reliability(Self) -> Double
 pub fn RouteProfile::historical_eta(Self, congestion~ : Double) -> Double
 pub fn RouteProfile::total_distance(Self) -> Double
+
+pub(all) struct RouteSelection {
+  selected : RouteCandidate?
+  alternatives : Array[RouteCandidate]
+  reason : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct RouteStreamState {
+  route : RouteProfile
+  engine : EtaEngine
+  calendar : RouteCalendar
+  weekday : Int
+  second_of_day : Double
+  updates : Int
+} derive(Eq, @debug.Debug)
+pub fn RouteStreamState::new(RouteProfile, initial_speed~ : Double, calendar? : RouteCalendar, weekday? : Int, second_of_day? : Double) -> Self
+pub fn RouteStreamState::observe(Self, Observation) -> (Self, StreamSnapshot)
+
+pub(all) struct Sampler {
+  state : UInt64
+} derive(Eq, @debug.Debug)
+pub fn Sampler::new(UInt64) -> Self
+pub fn Sampler::next(Self) -> (Self, UInt64)
+pub fn Sampler::noise(Self, magnitude~ : Double) -> (Self, Double)
+pub fn Sampler::unit(Self) -> (Self, Double)
 
 pub(all) struct ScenarioConfig {
   steps : Int
@@ -163,6 +951,37 @@ pub(all) struct ScenarioTrace {
   actual_remaining : Array[Double]
 } derive(Eq, @debug.Debug)
 
+pub(all) enum SchemaField {
+  Timestamp
+  Distance
+  Elapsed
+  ActualRemaining
+  Weight
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SchemaReport {
+  valid : Bool
+  missing : Array[SchemaField]
+  unknown : Array[String]
+  message : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SegmentEta {
+  segment_id : String
+  distance : Double
+  speed : Double
+  eta_seconds : Double
+  confidence : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SegmentForecast {
+  index : Int
+  segment : SegmentProfile
+  eta : SegmentEta
+  regime : TrafficRegime
+  congestion : Double
+} derive(Eq, @debug.Debug)
+
 pub(all) struct SegmentProfile {
   segment_id : String
   distance : Double
@@ -173,6 +992,87 @@ pub(all) struct SegmentProfile {
 } derive(Eq, @debug.Debug)
 pub fn SegmentProfile::expected_seconds(Self, congestion~ : Double) -> Double
 pub fn SegmentProfile::expected_speed(Self, congestion~ : Double) -> Double
+pub fn SegmentProfile::speed_for_regime(Self, TrafficRegime) -> Double
+
+pub(all) struct SensitivityPoint {
+  input : Double
+  eta_seconds : Double
+  speed : Double
+  confidence : Double
+  delta_from_baseline : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SensitivityReport {
+  parameter : String
+  baseline : SensitivityPoint
+  points : Array[SensitivityPoint]
+  monotonic : Bool
+  elasticity : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct SpeedPolicy {
+  free_flow_weight : Double
+  typical_weight : Double
+  rush_hour_weight : Double
+  live_weight : Double
+  minimum_speed : Double
+  maximum_speed : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) struct StreamSnapshot {
+  update : Int
+  observation : Observation
+  result : EtaResult
+  label : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct StreamSummary {
+  snapshots : Array[StreamSnapshot]
+  latest : EtaResult
+  average_confidence : Double
+  dropped : Int
+} derive(Eq, @debug.Debug)
+
+pub(all) struct TimeSeriesSummary {
+  count : Int
+  first : Double
+  last : Double
+  minimum : Double
+  maximum : Double
+  mean : Double
+  trend : Double
+  volatility : Double
+} derive(Eq, @debug.Debug)
+
+pub(all) enum TrafficRegime {
+  FreeFlow
+  Typical
+  RushHour
+  Live
+} derive(Eq, @debug.Debug)
+
+pub(all) enum ValidationCode {
+  EmptyInput
+  NonFiniteValue
+  NegativeTimestamp
+  NegativeDistance
+  NonMonotonicTime
+  NonMonotonicDistance
+  InvalidConfiguration
+  InvalidRange
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ValidationIssue {
+  code : ValidationCode
+  index : Int
+  message : String
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ValidationReport {
+  valid : Bool
+  checked : Int
+  issues : Array[ValidationIssue]
+} derive(Eq, @debug.Debug)
 
 pub(all) struct VelocitySample {
   timestamp : Double
@@ -202,4 +1102,3 @@ pub fn WindowState::stability(Self) -> Double
 // Type aliases
 
 // Traits
-

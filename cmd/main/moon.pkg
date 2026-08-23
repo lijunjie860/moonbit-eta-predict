@@ -1,5 +1,6 @@
 import {
   "lijunjie860/moonbit-eta-predict" @eta,
+  "moonbitlang/core/env",
 }
 
 pkgtype(kind: "executable")

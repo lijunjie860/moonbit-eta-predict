@@ -1,73 +1,56 @@
 # moonbit-eta-predict
 
-`moonbit-eta-predict` is a MoonBit library for streaming estimated-time-of-arrival prediction. It combines scalar Kalman smoothing, robust outlier handling, adaptive moving windows, route segment profiles, and evaluation helpers so a MoonBit application can turn noisy progress observations into stable ETA updates.
+`moonbit-eta-predict` provides deterministic streaming ETA prediction primitives for MoonBit applications. It combines scalar Kalman smoothing, adaptive windows, route profiles, calendar-aware congestion, typed CSV/JSON Lines codecs, batch calibration, quality gates, and reproducible benchmark reports.
 
-The project was created for the MoonBit August Hackathon. Before selecting the topic, I checked mooncakes.io for overlapping packages around ETA, Kalman filtering, and time-series forecasting. Existing packages did not show a mature MoonBit ETA engine with route profiles and streaming correction, so this project focuses on that gap instead of duplicating a general utility library.
-
-## Features
-
-- One-dimensional Kalman filter for online speed smoothing.
-- Innovation gate for noisy GPS or delayed telemetry measurements.
-- Adaptive window that grows on stable traffic and shrinks during variance spikes.
-- Route profiles with free-flow, typical, rush-hour, and reliability parameters.
-- ETA engine that blends live observations with historical segment expectations.
-- Metrics helpers for MAE, RMSE, MAPE, and max error.
-- Synthetic scenario generator for repeatable noisy route traces.
-- Congestion calibration scan for tuning route profiles.
-- Text report helpers for demos, CI logs, and acceptance evidence.
-- Runnable demo and black-box tests.
-
-## Quick Start
+## Quick start
 
 ```bash
 moon update
-moon check --deny-warn
-moon test --deny-warn
-moon fmt
-moon info
-git diff --exit-code
-moon run cmd/main
+moon check --deny-warn --target all
+moon test --deny-warn --target all
+moon run cmd/main -- demo
 ```
-
-## Example
 
 ```mbt check
 ///|
-test {
+test "README forecast example" {
   let route = demo_route()
-  let observations = demo_observations()
-  let results = forecast_route(observations, route)
-  assert_true(results.length() > 0)
+  let batch = forecast_batch(demo_observations(), route, congestion=0.3)
+  assert_true(batch.results.length() > 0)
+  assert_true(batch.summary.count == batch.results.length())
 }
 ```
 
-## Repository Structure
+## Capabilities
+
+- Kalman smoothing and innovation gating.
+- Adaptive windows and confidence estimation.
+- Multi-segment route ETA and weekly congestion calendars.
+- CSV and JSON Lines observation codecs with schema validation.
+- Batch forecasting, rolling evaluation, calibration, and cross-validation.
+- Error metrics, quality gates, alerts, route selection, and explanations.
+- Deterministic CLI demos and benchmark cases.
+
+## CLI
 
 ```text
-.
-|-- types.mbt                  # Public domain records
-|-- defaults.mbt               # Defaults and numeric helpers
-|-- kalman.mbt                 # Kalman prediction and measurement update
-|-- window.mbt                 # Adaptive moving window
-|-- profile.mbt                # Route and segment historical model
-|-- eta.mbt                    # ETA engine facade
-|-- metrics.mbt                # Forecast evaluation helpers
-|-- scenario.mbt               # Synthetic route trace generation
-|-- calibration.mbt            # Congestion parameter scanning
-|-- report.mbt                 # Human-readable result summaries
-|-- examples.mbt               # Built-in demo route and observations
-|-- cmd/main                   # CLI demo
-|-- .github/workflows/test.yml # CI for MoonBit checks and tests
+moon run cmd/main -- demo
+moon run cmd/main -- benchmark table
+moon run cmd/main -- calibrate
+moon run cmd/main -- validate
 ```
 
-## Scope
+## Testing and CI
 
-The first release targets deterministic ETA estimation primitives that are easy to test and reuse. It does not depend on an external map provider, online traffic API, or native database. Future versions can add CSV ingestion, richer segment calendars, batch calibration, and bindings for web or edge deployments.
+```bash
+moon fmt --check
+moon check --deny-warn --target all
+moon test --deny-warn --target all
+moon info
+```
 
-## Source Statement
-
-All MoonBit source code in this repository is original implementation work for the hackathon. The algorithms are standard public-domain engineering techniques: scalar Kalman filtering, moving-window statistics, and weighted ETA blending. No third-party source code was copied into the implementation.
+The repository CI repeats these checks on Ubuntu, macOS, and Windows and publishes coverage summaries.
 
 ## License
 
-Apache-2.0.
+Apache-2.0. See [LICENSE](LICENSE).
