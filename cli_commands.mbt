@@ -5,7 +5,7 @@ pub fn run_cli(arguments : Array[String]) -> String {
     [] => cli_help()
     ["help"] => cli_help()
     ["--help"] => cli_help()
-    ["version"] => "moonbit-eta-predict 0.2.0"
+    ["version"] => version_banner()
     ["demo"] => demo_report()
     ["benchmark"] => benchmark_annotation(run_benchmark_suite())
     ["benchmark", "table"] => render_benchmark_table(run_benchmark_suite())

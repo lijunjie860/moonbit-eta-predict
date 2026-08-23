@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- Corrected public diagnostic interpolation and added boundary coverage for guardrails, alerts, explanations, time-series utilities, route contracts, health checks, metadata, and sensitivity reports.
+- Removed internal planning artifacts from the public tree and clarified source attribution and dependency scope.
+
 ## 0.2.0
 
 - Added typed validation, normalization, schema checks, and input guardrails.

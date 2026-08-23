@@ -1,7 +1,7 @@
 ///|
 /// Public package version shown by the CLI and release tooling.
 pub fn package_version() -> String {
-  "0.2.0"
+  "0.2.1"
 }
 
 ///|
@@ -84,7 +84,7 @@ pub fn metadata_is_complete() -> Bool {
 ///|
 /// Return a concise version string for command output.
 pub fn version_banner() -> String {
-  "{package_name()} {package_version()} ({package_license()})"
+  "\{package_name()} \{package_version()} (\{package_license()})"
 }
 
 ///|

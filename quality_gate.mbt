@@ -106,7 +106,9 @@ pub fn evaluate_batch_quality(
 /// Render a gate result for CI output.
 pub fn format_quality_gate(result : QualityGateResult) -> String {
   let builder = StringBuilder()
-  builder.write_string("passed={result.passed} points={result.checked_points} ")
+  builder.write_string(
+    "passed=\{result.passed} points=\{result.checked_points} ",
+  )
   builder.write_string(format_error_summary(result.summary))
   if result.reasons.length() > 0 {
     builder.write_string(" reasons=")

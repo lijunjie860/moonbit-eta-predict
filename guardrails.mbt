@@ -119,13 +119,7 @@ pub fn check_eta_result(result : EtaResult) -> Bool {
   result.confidence >= 0.0 &&
   result.confidence <= 1.0 &&
   is_finite_value(result.eta_seconds) &&
-  is_finite_value(result.smidence())
-}
-
-///|
-/// Keep the result contract check independent of optional host integrations.
-fn EtaResult::smidence(self : EtaResult) -> Double {
-  self.confidence
+  is_finite_value(result.confidence)
 }
 
 ///|
@@ -184,7 +178,7 @@ pub fn forecast_contract(
 pub fn format_contract(report : ContractReport) -> String {
   let builder = StringBuilder()
   builder.write_string(
-    "valid={report.valid} checks={report.checks} failures={report.failures.length()}\n",
+    "valid=\{report.valid} checks=\{report.checks} failures=\{report.failures.length()}\n",
   )
   for failure in report.failures {
     builder.write_string(failure)

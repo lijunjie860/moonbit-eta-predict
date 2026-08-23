@@ -168,6 +168,7 @@ test "benchmark suite is deterministic and non-empty" {
 test "cli dispatch exposes help and benchmark" {
   assert_true(run_cli(["help"]).contains("benchmark"))
   assert_true(run_cli(["benchmark"]).contains("cases="))
+  assert_true(run_cli(["version"]).contains("0.2.1"))
   assert_true(run_cli(["unknown"]).contains("unknown command"))
 }
 
@@ -306,4 +307,115 @@ test "benchmark reports contain real deterministic case rows" {
   assert_true(benchmark_lines(report).length() == report.cases.length() + 1)
   assert_true(benchmark_interpretation(report).contains("cases="))
   assert_true(benchmark_mae_spread(report) >= 0.0)
+}
+
+///|
+test "public diagnostics render values instead of interpolation markers" {
+  assert_true(version_banner().contains("moonbit-eta-predict 0.2.1"))
+  let contract = format_contract({
+    valid: false,
+    checks: 2,
+    failures: ["bad input"],
+  })
+  assert_true(contract.contains("valid=false checks=2 failures=1"))
+  let gate = format_quality_gate({
+    passed: false,
+    reasons: ["too few points"],
+    checked_points: 0,
+    summary: summarize_errors([]),
+  })
+  assert_true(gate.contains("passed=false points=0"))
+}
+
+///|
+test "guardrails and route contracts reject unsafe traces" {
+  let route = demo_route()
+  let input_guard = default_input_guard(route)
+  let observations : Array[Observation] = [
+    { timestamp: 0.0, distance: 0.0, elapsed: 0.0 },
+    { timestamp: 30.0, distance: 200.0, elapsed: 30.0 },
+    { timestamp: 20.0, distance: 100.0, elapsed: 20.0 },
+  ]
+  let (accepted, reasons) = guard_trace(observations, input_guard)
+  assert_eq(accepted.length(), 2)
+  assert_true(reasons.length() > 0)
+  assert_true(
+    !guard_observation(Some(observations[1]), observations[2], input_guard).accepted,
+  )
+  assert_true(
+    clamp_observation_distance(observations[1], 100.0).distance == 100.0,
+  )
+  let results = run_demo()
+  assert_true(results_are_finite(results))
+  assert_true(forecast_contract(demo_observations(), results).valid)
+}
+
+///|
+test "alerts and explanations expose operational context" {
+  let route = demo_route()
+  let (summary, alerts) = monitor_observations(
+    [
+      { timestamp: 0.0, distance: 0.0, elapsed: 0.0 },
+      { timestamp: 30.0, distance: 20.0, elapsed: 30.0 },
+    ],
+    route,
+  )
+  assert_true(summary.snapshots.length() == 2)
+  assert_eq(alert_counts(alerts).length(), 5)
+  assert_true(format_alerts(alerts).contains("update="))
+  let explanations = explain_batch(
+    forecast_batch(demo_observations(), route, congestion=0.8),
+    route,
+    congestion=0.8,
+  )
+  assert_true(explanations.length() > 0)
+  assert_true(format_eta_explanation(explanations[0]).contains("remaining="))
+}
+
+///|
+test "time series utilities cover empty and boundary series" {
+  assert_eq(summarize_time_series([]).count, 0)
+  assert_eq(first_differences([1.0, 3.0, 2.0]).length(), 2)
+  assert_true(cumulative_sum([1.0, 2.0], initial=1.0)[1] == 4.0)
+  assert_true(integrate_series([0.0, 2.0, 4.0]) == 4.0)
+  assert_true(interpolate_series([0.0, 10.0], 0.5) == 5.0)
+  assert_eq(resample_series([0.0, 10.0], 3).length(), 3)
+  assert_eq(moving_average_series([1.0, 3.0, 5.0], 2).length(), 3)
+  assert_eq(holt_level([]).length(), 0)
+  assert_eq(extrapolate_series([2.0], 2).length(), 2)
+}
+
+///|
+test "health metadata and sensitivity are stable for host integrations" {
+  assert_true(demo_health().ready)
+  assert_true(capabilities_are_named())
+  assert_true(metadata_is_complete())
+  assert_true(supports_target("wasm-gc"))
+  assert_true(!supports_target("unknown"))
+  let speed_report = speed_sensitivity(demo_route(), congestion=0.4, steps=2)
+  assert_eq(speed_report.points.length(), 3)
+  assert_true(maximum_sensitivity_delta(speed_report) >= 0.0)
+  assert_true(nearest_sensitivity_point(speed_report, 8.0) is Some(_))
+  assert_true(format_sensitivity(speed_report).contains("parameter=live_speed"))
+  assert_true(regime_for_congestion(0.0) == FreeFlow)
+  assert_true(regime_for_congestion(1.0) == RushHour)
+}
+
+///|
+test "calendar route forecasts preserve segment contracts" {
+  let detailed = forecast_breakdown_at(
+    demo_route(),
+    speed=8.0,
+    demo_calendar(),
+    weekday=1,
+    second_of_day=8.0 * 3600.0,
+  )
+  assert_true(detailed_breakdown_is_consistent(detailed))
+  assert_true(format_detailed_breakdown(detailed).contains("weekday=1"))
+  assert_true(
+    cumulative_segment_eta(detailed.total.segments).length() ==
+    detailed.total.segments.length(),
+  )
+  assert_true(bottleneck_segment(detailed.total.segments) is Some(_))
+  assert_true(reliable_distance_fraction(demo_route()) >= 0.0)
 }

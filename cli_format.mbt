@@ -18,7 +18,7 @@ pub fn format_breakdown(breakdown : RouteBreakdown) -> String {
 pub fn format_detailed_breakdown(detailed : DetailedBreakdown) -> String {
   let builder = StringBuilder()
   builder.write_string(
-    "weekday={detailed.weekday} second={detailed.second_of_day}\n",
+    "weekday=\{detailed.weekday} second=\{detailed.second_of_day}\n",
   )
   for forecast in detailed.forecasts {
     builder.write_string(
