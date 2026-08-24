@@ -1,7 +1,7 @@
 ///|
 /// Public package version shown by the CLI and release tooling.
 pub fn package_version() -> String {
-  "0.2.1"
+  "0.2.2"
 }
 
 ///|

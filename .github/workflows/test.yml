@@ -38,10 +38,37 @@ jobs:
           irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
           "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
 
-      - name: Toolchain
+      - name: Toolchain on Unix
+        if: runner.os != 'Windows'
+        shell: bash
         run: |
           moon version --all
           moon update
+          version="$(moonc -v | sed -n 's/.*v\([0-9][0-9]*\)\.\([0-9][0-9]*\)\.\([0-9][0-9]*\).*/\1 \2 \3/p')"
+          set -- $version
+          if [ "$#" -ne 3 ]; then
+            echo "Unable to parse MoonBit compiler version" >&2
+            exit 1
+          fi
+          if [ "$1" -eq 0 ] && { [ "$2" -lt 10 ] || { [ "$2" -eq 10 ] && [ "$3" -lt 9 ]; }; }; then
+            echo "MoonBit compiler v0.10.9 or newer is required" >&2
+            exit 1
+          fi
+
+      - name: Toolchain on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          moon version --all
+          moon update
+          $match = (moonc -v | Select-String -Pattern 'v(\d+)\.(\d+)\.(\d+)').Matches
+          if ($null -eq $match) { throw "Unable to parse MoonBit compiler version" }
+          $major = [int]$match.Groups[1].Value
+          $minor = [int]$match.Groups[2].Value
+          $patch = [int]$match.Groups[3].Value
+          if (($major -lt 0) -or (($major -eq 0) -and ($minor -lt 10)) -or (($major -eq 0) -and ($minor -eq 10) -and ($patch -lt 9))) {
+            throw "MoonBit compiler v0.10.9 or newer is required"
+          }
 
       - name: Format
         run: moon fmt --check

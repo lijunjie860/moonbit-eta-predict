@@ -168,7 +168,7 @@ test "benchmark suite is deterministic and non-empty" {
 test "cli dispatch exposes help and benchmark" {
   assert_true(run_cli(["help"]).contains("benchmark"))
   assert_true(run_cli(["benchmark"]).contains("cases="))
-  assert_true(run_cli(["version"]).contains("0.2.1"))
+  assert_true(run_cli(["version"]).contains("0.2.2"))
   assert_true(run_cli(["unknown"]).contains("unknown command"))
 }
 
@@ -311,7 +311,7 @@ test "benchmark reports contain real deterministic case rows" {
 
 ///|
 test "public diagnostics render values instead of interpolation markers" {
-  assert_true(version_banner().contains("moonbit-eta-predict 0.2.1"))
+  assert_true(version_banner().contains("moonbit-eta-predict 0.2.2"))
   let contract = format_contract({
     valid: false,
     checks: 2,

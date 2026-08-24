@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+- Documented and enforced the MoonBit `v0.10.9` minimum toolchain in CI and release documentation.
+
 ## 0.2.1
 
 - Corrected public diagnostic interpolation and added boundary coverage for guardrails, alerts, explanations, time-series utilities, route contracts, health checks, metadata, and sensitivity reports.

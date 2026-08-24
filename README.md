@@ -20,7 +20,7 @@ Deterministic, streaming estimated-time-of-arrival primitives for MoonBit applic
 
 ## Quick start
 
-Requires the current stable MoonBit toolchain.
+Requires MoonBit `v0.10.9` or newer; the CI workflow installs the current stable toolchain and enforces this floor.
 
 ```bash
 moon update

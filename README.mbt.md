@@ -4,6 +4,8 @@
 
 ## Quick start
 
+Use MoonBit `v0.10.9` or newer.
+
 ```bash
 moon update
 moon check --deny-warn --target all
